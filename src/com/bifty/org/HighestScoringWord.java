@@ -24,6 +24,14 @@ public class HighestScoringWord {
     			highestScoreWord = words[i];
     		}
 		}
+    	
+
+//    	small but cpu consuming strategy:
+//        return Arrays.stream(s.split(" "))
+//                .max(Comparator.comparingInt(
+//                        a -> a.chars().map(i -> i - 96).sum()
+//                )).get(); 
+//		}
 
     	return highestScoreWord;
     }		

@@ -4,39 +4,62 @@ public class EncryptThis {
 
     public static String encryptThis(String text) {
 
-    	if (text.equals("")) return text;
+    	if (text.length() == 0) return text;
     	
-    	StringBuffer encoded = new StringBuffer();
+    	StringBuffer encodedOutput = new StringBuffer();
 
     	String[] splittedWords = text.split(" ");
     	
+    	
     	for (String word: splittedWords) {
     		
-    		char firstLetter = word.charAt(0);
-    		String firstLetterEncoded = Integer.toString((int) firstLetter);
-    		
-    		encoded.append(firstLetterEncoded);
+    		if (word.length() > 0) {
+    			
+    			encodedOutput.append(encodeFirstLetter(word));
+    		}
     		
     		if (word.length() == 2) {
-    			encoded.append(word.charAt(1));
+    			encodedOutput.append(unencodedSecondLetter(word));
     		}
     		
     		else if (word.length() > 2) {
-    			char secondLetter = word.charAt(1);
-    			char lastLetter = word.charAt(word.length() - 1);
-    			
-    			char secondLetterEncoded = lastLetter;
-    			char lastLetterEncoded = secondLetter;
-    			
-    			encoded.append(secondLetterEncoded);
-    			encoded.append(word.substring(2, word.length() -1));
-    			encoded.append(lastLetterEncoded);
+    			encodedOutput.append(encodedSecondLetter(word));
+
+    			encodedOutput.append(addMiddleLetters(word));
+
+    			encodedOutput.append(encodedLastLetter(word));
     		}
-    		encoded.append(" ");
+    		encodedOutput.append(" ");
     	}
 
 		
-    	return encoded.toString().trim();
+    	encodedOutput.delete(encodedOutput.length() - 1, encodedOutput.length());
+    	return encodedOutput.toString();
     }
+
+	private static char encodedLastLetter(String word) {
+		char secondLetter = word.charAt(1);
+		return secondLetter;
+	}
+
+	private static char encodedSecondLetter(String word) {
+		char lastLetter = word.charAt(word.length() - 1);
+		return lastLetter;
+	}
+
+	private static String addMiddleLetters(String word) {
+		return word.substring(2, word.length() -1);
+	}
+
+	private static char unencodedSecondLetter(String word) {
+		return word.charAt(1);
+	}
+
+	private static String encodeFirstLetter(String word) {
+		char firstLetter = word.charAt(0);
+		String firstLetterEncoded = Integer.toString((int) firstLetter);
+		
+		return firstLetterEncoded;
+	}
     
 }

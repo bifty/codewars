@@ -3,19 +3,26 @@ package com.bifty.org;
 public class MaxSubArraySum {
 
 	public static int sequence(int[] arr) {
-		if (arr.length == 0)
-			return 0;
+		int currentSum = 0;
+		int greatestSum = 0;
 
-		int sum = 0;
 		for (int item : arr) {
-			if (item > 0)
-				sum += item;
+			if (greatestSum < item + currentSum) {
+				currentSum = currentSum + item;
+				greatestSum = currentSum;
+
+			} else if (greatestSum < item) {
+				greatestSum = item;
+				currentSum = item;
+			} else {
+				currentSum = currentSum + item > 0 ? currentSum + item : 0;
+				if (greatestSum < currentSum)
+					greatestSum = currentSum;
+
+			}
 		}
 
-		if (sum < 0)
-			return 0;
-
-		return sum;
+		return greatestSum;
 	}
 
 }
